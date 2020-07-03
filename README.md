@@ -36,6 +36,26 @@ RCHAR(255) not null unique) ENGINE = INNODB;
 
 # Postgres
 
+
+## docker-compose.yml
+
+```
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+```
+
 ```
 root@51f0c7cff0d2:/# psql -U postgres
 psql (12.3 (Debian 12.3-1.pgdg100+1))
