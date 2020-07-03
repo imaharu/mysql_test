@@ -1,3 +1,5 @@
+# MySQL
+
 ## docker-compose.yml
 
 ```yml
@@ -30,4 +32,46 @@ RCHAR(255) not null unique) ENGINE = INNODB;
 > Insert into users (email) values ("hoge@example.com");
 > commit;
 > select * from users;
+```
+
+# Postgres
+
+```
+root@51f0c7cff0d2:/# psql -U postgres
+psql (12.3 (Debian 12.3-1.pgdg100+1))
+Type "help" for help.
+
+postgres=# select * from users;
+ email 
+-------
+(0 rows)
+
+postgres=# Insert into users (email) values ("imaharu@example.com");
+ERROR:  column "imaharu@example.com" does not exist
+LINE 1: Insert into users (email) values ("imaharu@example.com");
+                                          ^
+postgres=# Insert into users (email) values ('imaharu@example.com');
+INSERT 0 1
+postgres=# select * from users;
+        email        
+---------------------
+ imaharu@example.com
+(1 row)
+
+postgres=# BEGIN;
+BEGIN
+postgres=# Insert into users (email) values ('imaharu@example.com');
+ERROR:  duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(imaharu@example.com) already exists.
+postgres=# Insert into users (email) values ('hoge@example.com');
+ERROR:  current transaction is aborted, commands ignored until end of transaction block
+postgres=# COMMIT;
+ROLLBACK
+postgres=# select * from users;
+        email        
+---------------------
+ imaharu@example.com
+(1 row)
+
+postgres=# 
 ```
