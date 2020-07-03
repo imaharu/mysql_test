@@ -39,7 +39,7 @@ RCHAR(255) not null unique) ENGINE = INNODB;
 
 ## docker-compose.yml
 
-```
+```yml
 version: '3.1'
 
 services:
@@ -57,10 +57,20 @@ services:
 ```
 
 ```
+
+```
+
+```
+$ docker-compose up -d
+$ docker-compose exec db bash
+
+root@51f0c7cff0d2:/# psql --version
+psql (PostgreSQL) 12.3 (Debian 12.3-1.pgdg100+1)
 root@51f0c7cff0d2:/# psql -U postgres
 psql (12.3 (Debian 12.3-1.pgdg100+1))
 Type "help" for help.
 
+postgres=# create table users(email varchar(255) not null UNIQUE);
 postgres=# select * from users;
  email 
 -------
